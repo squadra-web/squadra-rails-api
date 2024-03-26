@@ -40,7 +40,7 @@ class Api::V1::ModalitiesController < ApplicationController
 
   private
 
-  def find_modaity
+  def find_modality
     @modality = Modality.find_by_id!(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { errors: 'Modality not found' }, status: :not_found
