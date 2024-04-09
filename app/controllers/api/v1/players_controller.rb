@@ -1,28 +1,30 @@
 class Api::V1::PlayersController < ApplicationController
   before_action :authorize_request
-  before_action :find_player, except: %i[create index]
+  before_action :find_player, except: %i[create create_bulk index]
 
   # GET /players
   def index
     @players = Player.all
-    render json: @players, status: :ok
+    render json: @players, each_serializer: PlayerSerializer, params: params[:include]
   end
 
 
   # GET /players/{id}
   def show
-    render json: @player, status: :ok
+    render json: @player, serializer: PlayerSerializer, params: params[:include]
   end
   
 
   # POST /players
   def create
     @player = Player.new(player_params)
+    @player.user_id = @current_user.id
+
     if @player.save
       render json: @player, status: :created
     else
       render json: { errors: @player.errors.full_messages },
-             status: :unprocessable_entity
+      status: :unprocessable_entity
     end
   end
 
@@ -49,7 +51,7 @@ class Api::V1::PlayersController < ApplicationController
 
   def player_params
     params.permit(
-      :name, :email, :phone, :birthdate, :team_id, :user_id, :rating, :status
+      :name, :email, :phone, :birthdate, :team_id, :group_id, :status
     )
   end
 end

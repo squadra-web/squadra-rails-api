@@ -51,7 +51,7 @@ class Api::V1::GroupsController < ApplicationController
 
   def group_params
     params.permit(
-      :name, :status
+      :name, :status, players_attributes: [:id, :name, :email, :phone, :birthdate, :position, :status, :team_id, :_destroy]
     )
   end
 end

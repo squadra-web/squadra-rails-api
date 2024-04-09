@@ -7,9 +7,14 @@ Rails.application.routes.draw do
       resources :teams do
         get 'players', on: :member
       end
-      resources :players, only: [:index, :show, :create, :update, :destroy]
+      resources :players, only: [:index, :show, :create, :update, :destroy, :create_bulk] do
+        collection do
+          post :create_bulk
+        end
+      end
       resources :modalities, only: [:index, :show, :create, :update, :destroy]
       resources :line_ups, only: [:index, :show, :create, :update, :destroy]
+      resources :groups, only: [:index, :show, :create, :update, :destroy]
       post '/auth/login', to: 'authentication#login'
       get "/me", to: "users#me"
       get '/*a', to: 'application#not_found'

@@ -18,8 +18,7 @@ class Api::V1::TeamsController < ApplicationController
   # POST /teams
   def create
     @team = Team.new(team_params)
-
-    puts team_params[:players]
+    @team.user_id = @current_user.id
 
     if @team.save
       render json: @team, serializer: TeamSerializer, params: params[:include], status: :created
@@ -60,6 +59,6 @@ class Api::V1::TeamsController < ApplicationController
   end
 
   def team_params
-    params.permit(:name, :group_id, :status)
+    params.permit(:name, :group_id, :status, players_attributes: [:id, :name, :email, :phone, :birthdate, :status, :position, :group_id, :_destroy])
   end
 end

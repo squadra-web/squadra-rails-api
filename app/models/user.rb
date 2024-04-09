@@ -4,4 +4,7 @@ class User < ApplicationRecord
   validates :password_digest,
             length: { minimum: 4 },
             if: -> { new_record? || !password_digest.nil? }
+
+  has_many :teams
+  has_many :groups
 end

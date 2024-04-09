@@ -4,14 +4,14 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
-    render json: @users, status: :ok
+    @users = User.all()
+    render json: @users, each_serializer: UserSerializer, params: params[:include]
   end
 
 
   # GET /users/{id}
   def show
-    render json: @user, status: :ok
+    render json: @user, serializer: UserSerializer, params: params[:include]
   end
   
 

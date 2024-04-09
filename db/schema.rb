@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2024_03_25_230129) do
 
   create_table "line_ups", charset: "utf8mb3", force: :cascade do |t|
     t.string "position"
+    t.integer "rating"
     t.bigint "player_id"
     t.bigint "team_id"
     t.datetime "created_at", precision: 6, null: false
@@ -43,7 +44,6 @@ ActiveRecord::Schema.define(version: 2024_03_25_230129) do
     t.string "name"
     t.string "phone"
     t.string "email"
-    t.integer "rating"
     t.string "status"
     t.bigint "user_id"
     t.bigint "team_id"

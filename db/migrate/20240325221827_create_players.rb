@@ -4,7 +4,6 @@ class CreatePlayers < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :phone
       t.string :email
-      t.integer :rating
       t.string :status
       t.belongs_to :user, foreign_key: { to_table: :users }
       t.belongs_to :team, foreign_key: { to_table: :teams }
