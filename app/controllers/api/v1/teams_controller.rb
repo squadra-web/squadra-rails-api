@@ -4,7 +4,7 @@ class Api::V1::TeamsController < ApplicationController
 
   # GET /teams
   def index
-    @teams = Team.where(user_id: @current_user.id)
+    @teams = Team.where(filter_params)
     render json: @teams, each_serializer: TeamSerializer, params: params[:include]
   end
 
@@ -43,8 +43,7 @@ class Api::V1::TeamsController < ApplicationController
 
   # GET /teams/{id}/players
   def players
-    @players = Player.where(team_id: @team.id)
-    render json: @players, status: :ok
+    render json: @team.players
   end
 
   private
@@ -60,5 +59,9 @@ class Api::V1::TeamsController < ApplicationController
 
   def team_params
     params.permit(:name, :group_id, :status, players_attributes: [:id, :name, :email, :phone, :birthdate, :status, :position, :group_id, :_destroy])
+  end
+
+  def filter_params
+    params.permit!.except(:controller, :action, :include)
   end
 end

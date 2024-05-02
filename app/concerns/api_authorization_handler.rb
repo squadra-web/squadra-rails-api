@@ -5,12 +5,15 @@ module ApiAuthorizationHandler
     header = request.headers['Authorization']
     header = header.split(' ').last if header
     begin
+      puts @decoded
       @decoded = JsonWebToken.decode(header)
       @current_user = User.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound => e
-      render_error_response(errors: e.message, status: 401)
+      json_response({ error: 'Usuário não encontrado' }, 404)
+      # render_error_response(errors: e.message, status: 401)
     rescue JWT::DecodeError => e
-      render_error_response(errors: e.message, status: 401)
+      json_response({ error: 'Usuário não encontrado' }, 401)
+      # render_error_response(errors: e.message, status: 401)
     end
   end
 end

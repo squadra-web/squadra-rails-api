@@ -4,6 +4,8 @@ class Player < ApplicationRecord
 
   belongs_to :user, optional: true
   belongs_to :group, optional: true
+  belongs_to :team, optional: true
+
   has_many :line_ups
   has_many :teams, through: :line_ups
 

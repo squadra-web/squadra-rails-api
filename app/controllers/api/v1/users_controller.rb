@@ -8,6 +8,10 @@ class Api::V1::UsersController < ApplicationController
     render json: @users, each_serializer: UserSerializer, params: params[:include]
   end
 
+  # GET /users/me
+  def me 
+    render json: @current_user, status: :ok
+  end
 
   # GET /users/{id}
   def show
@@ -25,6 +29,7 @@ class Api::V1::UsersController < ApplicationController
              status: :unprocessable_entity
     end
   end
+  
 
   # PUT /users/{id}
   def update
@@ -39,10 +44,7 @@ class Api::V1::UsersController < ApplicationController
     @user.destroy
   end
   
-  # GET /me
-  def me 
-    render json: @current_user, status: :ok
-  end
+  
 
   private
 

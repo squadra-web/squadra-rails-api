@@ -13,6 +13,11 @@ class Api::V1::GroupsController < ApplicationController
   def show
     render json: @group, serializer: GroupSerializer, params: params[:include]
   end
+
+  # GET /groups/{id}/teams
+  def teams
+    render json: @group.teams
+  end
   
 
   # POST /groups

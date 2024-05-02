@@ -4,7 +4,7 @@ class Api::V1::PlayersController < ApplicationController
 
   # GET /players
   def index
-    @players = Player.all
+    @players = Player.where(filter_params)
     render json: @players, each_serializer: PlayerSerializer, params: params[:include]
   end
 
@@ -53,5 +53,9 @@ class Api::V1::PlayersController < ApplicationController
     params.permit(
       :name, :email, :phone, :birthdate, :team_id, :group_id, :status
     )
+  end
+
+  def filter_params
+    params.permit!.except(:controller, :action, :include)
   end
 end
